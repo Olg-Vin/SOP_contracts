@@ -18,13 +18,25 @@ public class ExceptionHandlers {
      */
     @ExceptionHandler(InvalidArgumentException.class)
     public ResponseEntity<StatusResponse> handleBadRequestException(InvalidArgumentException e) {
-        var status = HttpStatus.BAD_REQUEST;
-        return ResponseEntity
-                .status(status)
-                .body(new StatusResponse(ERROR_STATUS, e.getMessage()));
+        return buildErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                "Переданны неверные данные: " + e.getMessage()
+        );
     }
 
-    // TODO: добавьте обработку других исключений, если потребуется.
+    /**
+     * Обработчик для исключений RecordNotFoundException.
+     *
+     * @param e экземпляр исключения RecordNotFoundException.
+     * @return стандартизированный ответ с HTTP-статусом NOT_FOUND (404).
+     */
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<StatusResponse> handleRecordNotFoundException(RecordNotFoundException e) {
+        return buildErrorResponse(
+                HttpStatus.NOT_FOUND,
+                "Запись в базе данных не найдена: " + e.getMessage()
+        );
+    }
 
     /**
      * Обработчик для всех остальных исключений.
@@ -34,9 +46,31 @@ public class ExceptionHandlers {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StatusResponse> handleGlobalException(Exception e) {
-        var status = HttpStatus.INTERNAL_SERVER_ERROR;
+        return buildErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Внутренняя ошибка сервера: " + e.getMessage()
+        );
+    }
+
+    // Обработчик для исключений ConflictException
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<StatusResponse> handleConflictException(ConflictException e) {
+        return buildErrorResponse(
+                HttpStatus.CONFLICT,
+                e.getMessage()
+        );
+    }
+
+    /**
+     * Утилитный метод для построения ответа об ошибке.
+     *
+     * @param status  HTTP-статус.
+     * @param message Сообщение об ошибке.
+     * @return Сформированный ResponseEntity.
+     */
+    private ResponseEntity<StatusResponse> buildErrorResponse(HttpStatus status, String message) {
         return ResponseEntity
                 .status(status)
-                .body(new StatusResponse(ERROR_STATUS, "Внутренняя ошибка сервера: " + e.getMessage()));
+                .body(new StatusResponse(ERROR_STATUS, message));
     }
 }
