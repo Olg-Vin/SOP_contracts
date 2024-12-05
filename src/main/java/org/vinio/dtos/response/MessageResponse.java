@@ -1,11 +1,8 @@
 package org.vinio.dtos.response;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.links.Link;
 
 import java.util.Date;
-import java.util.List;
 
 @Schema(description = "Ответ, представляющий сообщение, хранящееся в системе")
 public record MessageResponse(
@@ -24,15 +21,6 @@ public record MessageResponse(
         @Schema(description = "Дата создания сообщения", example = "2024-11-15T12:34:56.789Z")
         Date createdAt,
         @Schema(description = "Статус обработки сообщения (например, 'new', 'in progress', 'resolved')", example = "new")
-        String status,
-        @ArraySchema(
-                schema = @Schema(description = "Доступные действия для сообщения", example = "[{\"href\":\"/messages/123/reopen\",\"rel\":\"reopen\"}]"),
-                minItems = 0
-        )
-        List<Link> actions,
-        @ArraySchema(
-                schema = @Schema(description = "Ссылки, связанные с данным сообщением", example = "[{\"href\":\"/users/456\",\"rel\":\"user\"}]"),
-                minItems = 0
-        )
-        List<Link> links
-) {}
+        String status
+) {
+}
