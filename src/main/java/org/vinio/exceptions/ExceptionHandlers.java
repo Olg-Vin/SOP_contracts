@@ -52,12 +52,17 @@ public class ExceptionHandlers {
         );
     }
 
-    // Обработчик для исключений ConflictException
+    /**
+     * Обработчик для исключений ConflictException.
+     *
+     * @param e экземпляр исключения RecordNotFoundException.
+     * @return стандартизированный ответ с HTTP-статусом CONFLICT (409).
+     */
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<StatusResponse> handleConflictException(ConflictException e) {
         return buildErrorResponse(
                 HttpStatus.CONFLICT,
-                e.getMessage()
+                "Такой ресурс уже есть: " + e.getMessage()
         );
     }
 
