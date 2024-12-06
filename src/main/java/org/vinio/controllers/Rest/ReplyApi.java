@@ -19,13 +19,16 @@ import org.vinio.dtos.response.ReplyResponse;
         @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера")
 })
 public interface ReplyApi {
+    @Operation(summary = "Получить ответ по его ID")
+    @GetMapping(value = "/replies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<ReplyResponse> getReplyById(@PathVariable("id") Long id);
 
     @Operation(summary = "Получить ответ по ID сообщения")
     @GetMapping(value = "/replies/getReply/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ReplyResponse> getReplyByMessageId(@PathVariable("id") Long id);
 
     @Operation(summary = "Создать новый ответ")
-    @PostMapping(value = "/replies", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/replies/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ReplyResponse> createReply(@RequestBody AddReplyRequest reply);
 
     @Operation(summary = "Обновить ответ")

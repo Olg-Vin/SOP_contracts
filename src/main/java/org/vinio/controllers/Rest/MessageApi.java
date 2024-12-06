@@ -19,10 +19,13 @@ import org.vinio.dtos.response.MessageResponse;
         @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера")
 })
 public interface MessageApi {
+    @Operation(summary = "Получить сообщение по его ID")
+    @GetMapping(value = "/messages/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<MessageResponse> getMessageById(@PathVariable("id") Long id);
 
     @Operation(summary = "Получить сообщение по ID ответа")
-    @GetMapping(value = "/messages/getMessage/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<MessageResponse> getMessageByReplyId(@PathVariable("id") Long id);
+    @GetMapping(value = "/messages/reply/{replyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<MessageResponse> getMessageByReplyId(@PathVariable("replyId") Long id);
 
     @Operation(summary = "Получить список сообщений пользователя по ID пользователя")
     @GetMapping(value = "/messages/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)

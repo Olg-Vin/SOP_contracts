@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.vinio.dtos.request.UserRequest;
+import org.vinio.dtos.request.AddUserRequest;
 import org.vinio.dtos.response.UserResponse;
 
 import java.util.List;
@@ -32,12 +32,12 @@ public interface UserApi {
     ResponseEntity<List<UserResponse>> getAllUsers();
 
     @Operation(summary = "Создать нового пользователя")
-    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest user);
+    @PostMapping(value = "/users/createUser", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<UserResponse> createUser(@Valid @RequestBody AddUserRequest user);
 
     @Operation(summary = "Обновить данные пользователя")
     @PutMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserRequest updatedUserDTO);
+    ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @Valid @RequestBody AddUserRequest updatedUserDTO);
 
     @Operation(summary = "Удалить пользователя")
     @DeleteMapping(value = "/users/{id}")
