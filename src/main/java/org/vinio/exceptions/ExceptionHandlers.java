@@ -2,6 +2,7 @@ package org.vinio.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -22,6 +23,28 @@ public class ExceptionHandlers {
                 HttpStatus.BAD_REQUEST,
                 "Переданны неверные данные: " + e.getMessage()
         );
+    }
+
+    /**
+     * Обработчик для исключений валидации (MethodArgumentNotValidException).
+     *
+     * @param ex исключение, содержащее ошибки валидации.
+     * @return стандартизированный ответ с HTTP-статусом BAD_REQUEST (400).
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StatusResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        // Получение первой ошибки из BindingResult
+        String errorMessage = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .findFirst()
+                .orElse("Ошибка валидации");
+
+        // Возвращаем стандартизированный ответ
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new StatusResponse("error", "Ошибка валидации: " + errorMessage));
     }
 
     /**

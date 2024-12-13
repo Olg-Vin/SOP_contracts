@@ -1,12 +1,12 @@
 package org.vinio.dtos.request;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class AddUserRequest {
     @NotNull(message = "Имя не может быть пустым")
-    @Max(value = 25, message = "Имя не должно быть длине 25 символов")
+    @Size(max = 50, message = "Имя не должно быть длиннее 50 символов")
     private String name;
     @NotNull(message = "Email не может быть пустым")
     @Email(message = "Проверьте правильность введённого email")

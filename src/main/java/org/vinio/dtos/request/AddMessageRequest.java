@@ -1,15 +1,15 @@
 package org.vinio.dtos.request;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class AddMessageRequest {
     @NotNull
     private Long userId;
-    @Max(value = 1024, message = "Тема должна кратко описывать содержимое сообщения")
+    @Size(max = 1024, message = "Тема должна кратко описывать содержимое сообщения")
     private String subject;
     @NotNull
-    @Max(value = 10_000, message = "Превышено количество символов для сообщения")
+    @Size(max = 10_000, message = "Превышено количество символов для сообщения")
     private String body;
 
     public AddMessageRequest(@NotNull Long userId, String subject, @NotNull String body) {

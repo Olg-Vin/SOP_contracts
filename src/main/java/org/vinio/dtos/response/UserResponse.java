@@ -1,9 +1,10 @@
 package org.vinio.dtos.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.hateoas.RepresentationModel;
 
 @Schema(description = "Ответ, представляющий информацию о пользователе")
-public class UserResponse {
+public class UserResponse extends RepresentationModel<UserResponse> {
 
     @Schema(description = "Идентификатор пользователя", example = "456")
     private Long userId;

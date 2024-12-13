@@ -1,11 +1,12 @@
 package org.vinio.dtos.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Date;
 
 @Schema(description = "Ответ, представляющий сообщение, хранящееся в системе")
-public class MessageResponse {
+public class MessageResponse extends RepresentationModel<MessageResponse> {
     @Schema(description = "Идентификатор сообщения", example = "123")
     private Long messageId;
     @Schema(description = "Идентификатор пользователя, отправившего сообщение", example = "456")
